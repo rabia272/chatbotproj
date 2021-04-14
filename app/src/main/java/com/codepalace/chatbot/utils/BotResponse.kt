@@ -42,8 +42,8 @@ object BotResponse {
                 }
             }
 
-
             message.contains("help",ignoreCase = true)||(message.contains("car",ignoreCase = true)&& (message.contains("issue",ignoreCase = true))) || message.contains("need help",ignoreCase = true)  || message.contains("have problem",ignoreCase = true)  || message.contains("have issue",ignoreCase = true) && (!((  message.contains("electric",ignoreCase = true)|| message.contains("electric",ignoreCase = true)||message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||message.contains("electrics",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))))-> {
+
                 when (random) {
                     0 -> "How can I help you?"
                     1 -> "Sure, What kind of help you need?"
@@ -404,7 +404,8 @@ object BotResponse {
 
                 }
             }
-            (message.contains("smoke coming from car",ignoreCase = true)) || message.contains("smoke",ignoreCase = true)  ||  (( message.contains(" engine",ignoreCase = true))&&((message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("issue",ignoreCase = true) ||message.contains("fault",ignoreCase = true)||message.contains("crises",ignoreCase = true)))) ||   message.contains("brake smell",ignoreCase = true) ||(  message.contains("gas",ignoreCase = true)&&(message.contains("consume",ignoreCase = true)|| message.contains("take",ignoreCase = true)|| message.contains("use",ignoreCase = true))) ||( message.contains("oil",ignoreCase = true)&&(message.contains("leak",ignoreCase = true)))  ||  message.contains("car breakdown",ignoreCase = true)-> {
+
+            message.contains("smoke coming from car",ignoreCase = true) || message.contains("smoke",ignoreCase = true)  ||  ( message.contains("engine",ignoreCase = true)&&(message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("issue",ignoreCase = true) ||message.contains("fault",ignoreCase = true)||message.contains("crises",ignoreCase = true))) ||   message.contains("brake smell",ignoreCase = true) ||(  message.contains("gas",ignoreCase = true)&&(message.contains("consume",ignoreCase = true)|| message.contains("take",ignoreCase = true)|| message.contains("use",ignoreCase = true))) ||( message.contains("oil",ignoreCase = true)&&(message.contains("leak",ignoreCase = true)))  ||  message.contains("car breakdown",ignoreCase = true)-> {
                 when (random) {
 
                     0 -> "The issue you facing is car breakdown.. \n"+
