@@ -1,40 +1,25 @@
 package com.codepalace.chatbot.utils
 
+import com.codepalace.chatbot.ui.MainActivity
 import com.codepalace.chatbot.utils.Constants.OPEN_GOOGLE
 import com.codepalace.chatbot.utils.Constants.OPEN_SEARCH
-import com.codepalace.chatbot.utils.Constants.OPEN_WHEEL_REPAIRING_SITE
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 
 object BotResponse {
-
-    fun basicResponses(_message: String): String {
+    var question="";
+    fun basicResponses(_message: String, _previousMessages: String): String {
 
         val random = (0..2).random()
         val message =_message.toLowerCase()
+        val previousMessages =_previousMessages.toLowerCase()
+
+
 
         return when {
 
-            //Flips a coin
-            message.contains("flip") && message.contains("coin") -> {
-                val r = (0..1).random()
-                val result = if (r == 0) "heads" else "tails"
 
-                "I flipped a coin and it landed on $result"
-            }
-
-            //Math calculations
-            message.contains("solve") -> {
-                val equation: String? = message.substringAfterLast("solve")
-                return try {
-                    val answer = SolveMath.solveMath(equation ?: "0")
-                    "$answer"
-
-                } catch (e: Exception) {
-                    "Sorry, I can't solve that."
-                }
-            }
 
             //Hello
             message.contains("hello",ignoreCase = true) ||  message.contains("hey",ignoreCase = true) ||  message.contains("hye",ignoreCase = true)  -> {
@@ -59,7 +44,7 @@ object BotResponse {
 
 
 
-            message.contains("I need your help",ignoreCase = true) || message.contains("Can I ask for help",ignoreCase = true) || message.contains("Want some help",ignoreCase = true) || message.contains("I want your help",ignoreCase = true) -> {
+            message.contains("help",ignoreCase = true)  || message.contains("need help",ignoreCase = true)  || message.contains("have problem",ignoreCase = true)  || message.contains("have issue",ignoreCase = true)  ->{//|| message.contains("Can I ask for help",ignoreCase = true) || message.contains("Want some help",ignoreCase = true) || message.contains("I want your help",ignoreCase = true) -> {
                 when (random) {
                     0 -> "How can I help you?"
                     1 -> "Sure, What kind of help you need?"
@@ -67,7 +52,359 @@ object BotResponse {
                     else -> "Iam here for your help.. Tell me what you want to ask"
                 }
             }
+            message.contains("emergency",ignoreCase = true)  ->{
+                when (random) {
+                    0 -> "Tell me about your problem?"
+                    1 -> "What type of problem you are facing?"
+                    2 -> "Yes Sir/Madam.. Tell me about your problem.."
+                    else -> "Iam here for your help.. Tell me what's your problem is?"
+                }
+            }
 
+            message.contains("car",ignoreCase = true) &&( message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true) || message.contains("stop",ignoreCase = true) )&& !(message.contains("not",ignoreCase = true)) ->{
+                when (random) {
+                    0 -> "Tell me some more?"
+                    else -> "Tell me more about the problem?"
+                }
+            }
+
+            message.contains("car",ignoreCase = true) &&( message.contains("not starting",ignoreCase = true)||message.contains("not started",ignoreCase = true) || message.contains("not start",ignoreCase = true) ) ->{
+                MainActivity.previousMessages += message;
+                question+="Is your car picking the sulf?";
+                when (random) {
+
+                    0 -> "Ok now check:\nIs your car picking the sulf?"
+                    else -> "Ok now check:\n" +
+                            "Is your car picking the sulf?"
+                }
+            }
+
+            question.contains("picking the sulf?",ignoreCase = true) &&( message.contains("no",ignoreCase = true)) ->{
+                MainActivity.previousMessages += message;
+                when (random) {
+
+                    0 -> "The issue you facing is called battery jump start.. \n"+
+                            "Here are some tips for you ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+                    1 -> "The problem you facing is  battery jump start.. \n"+
+                            "Solution for your problem, that might help you ..\n"+
+                            "1.Park the car you’ll use for jump-starting next to the one with the dead battery, positioned close enough so that the cables will reach. The vehicles shouldn't touch one another.\n" +
+                            "Turn off the ignition on both cars.\n" +
+                            "2. First, clamp one end of the positive cable to the dead battery’s positive clamp.\n" +
+                            "3. Now have a helper connect the other end of that cable to the other battery’s positive clamp.\n" +
+                            "4. Next, connect the negative cable to the negative terminal on the good battery.\n" +
+                            "5. Finally, connect the other end of the negative cable to a ground on the vehicle with the dead battery. This can be the engine block or another metal surface away from the battery. Be careful not to touch the two ends of the cable together while doing this.\n" +
+                            "Start the rescue car that is providing the electricity.\n" +
+                            "6. Start the car with the weak battery. If it doesn’t start, check your connections and tighten or clean as needed.\n" +
+                            "7. If it does start, let the problem car run for at least 20 minutes to allow the battery to recharge before shutting it off.\n" +
+                            "8. If it still doesn’t start, there may be another problem. Call a local service station for help.\n" +
+                            "9. Disconnect the cables in the reverse order.\n"
+
+                    else -> "Main Issue is Battery Jump Start..Here are some tips to resolve battery jump start issue ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+                }
+            }
+
+
+            question.contains("Ok now check:\nIs your car picking the sulf?",ignoreCase = true) &&( message.contains("yes",ignoreCase = true)) ->{
+                MainActivity.previousMessages += message;
+                question="Now check the electrical supply in plug\n"+
+                        "Is it ok?\n";
+                when (random) {
+
+                    0 -> "Now check the electrical supply in plug\n"+
+                            "Is it ok?\n"
+
+
+                    else ->"Now check the electrical supply in plug\n"+
+                            "Is it ok?\n"
+                }
+            }
+
+            question.contains("Now check the electrical supply in plug\n"+
+                    "Is it ok?\n",ignoreCase = true) &&( message.contains("no",ignoreCase = true)) ->{
+                MainActivity.previousMessages += message;
+                when (random) {
+
+                    0 -> "If your answer is no, it means your connection has disrupted between plug and wire due to rust. Now change the wire"
+
+
+                    else ->"If your answer is no, it means your connection has disrupted between plug and wire due to rust. Now change the wire"
+
+                }
+            }
+            message.contains("car",ignoreCase = true) &&( message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true) || message.contains("stop",ignoreCase = true) )&& !(message.contains("not",ignoreCase = true)) ->{
+                when (random) {
+                    0 -> "Tell me about your problem?"
+                    1 -> "What type of problem you are facing?"
+                    2 -> "Yes Sir/Madam.. Tell me about your problem.."
+                    else -> "Iam here for your help.. Tell me what's your problem is?"
+                }
+            }
+
+            (message.contains("battery",ignoreCase = true) && message.contains("dead",ignoreCase = true) && !(message.contains("not dead",ignoreCase = true))|| message.contains("battery jump start",ignoreCase = true) )-> {
+                MainActivity.previousMessages += message;
+                when (random) {
+
+
+                    0 -> "The issue you facing is called battery jump start.. \n"+
+                            "Here are some tips for you ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+                    1 -> "The problem you facing is  battery jump start.. \n"+
+                            "Solution for your problem, that might help you ..\n"+
+                            "1.Park the car you’ll use for jump-starting next to the one with the dead battery, positioned close enough so that the cables will reach. The vehicles shouldn't touch one another.\n" +
+                            "Turn off the ignition on both cars.\n" +
+                            "2. First, clamp one end of the positive cable to the dead battery’s positive clamp.\n" +
+                            "3. Now have a helper connect the other end of that cable to the other battery’s positive clamp.\n" +
+                            "4. Next, connect the negative cable to the negative terminal on the good battery.\n" +
+                            "5. Finally, connect the other end of the negative cable to a ground on the vehicle with the dead battery. This can be the engine block or another metal surface away from the battery. Be careful not to touch the two ends of the cable together while doing this.\n" +
+                            "Start the rescue car that is providing the electricity.\n" +
+                            "6. Start the car with the weak battery. If it doesn’t start, check your connections and tighten or clean as needed.\n" +
+                            "7. If it does start, let the problem car run for at least 20 minutes to allow the battery to recharge before shutting it off.\n" +
+                            "8. If it still doesn’t start, there may be another problem. Call a local service station for help.\n" +
+                            "9. Disconnect the cables in the reverse order.\n"
+
+                    else -> "Main Issue is Battery Jump Start..Here are some tips to resolve battery jump start issue ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+
+                }
+            }
+            (( message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true))))-> {
+
+
+                MainActivity.previousMessages += message;
+                when (random) {
+
+                    0 ->  "I have already told you that the issue you facing is called battery jump start.. \n"+
+                            "Again Here are some tips for you ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+                    1 -> "I have already told you that the problem you facing is  battery jump start.. \n"+
+                            "Again Solution for your problem, that might help you ..\n"+
+                            "1.Park the car you’ll use for jump-starting next to the one with the dead battery, positioned close enough so that the cables will reach. The vehicles shouldn't touch one another.\n" +
+                            "Turn off the ignition on both cars.\n" +
+                            "2. First, clamp one end of the positive cable to the dead battery’s positive clamp.\n" +
+                            "3. Now have a helper connect the other end of that cable to the other battery’s positive clamp.\n" +
+                            "4. Next, connect the negative cable to the negative terminal on the good battery.\n" +
+                            "5. Finally, connect the other end of the negative cable to a ground on the vehicle with the dead battery. This can be the engine block or another metal surface away from the battery. Be careful not to touch the two ends of the cable together while doing this.\n" +
+                            "Start the rescue car that is providing the electricity.\n" +
+                            "6. Start the car with the weak battery. If it doesn’t start, check your connections and tighten or clean as needed.\n" +
+                            "7. If it does start, let the problem car run for at least 20 minutes to allow the battery to recharge before shutting it off.\n" +
+                            "8. If it still doesn’t start, there may be another problem. Call a local service station for help.\n" +
+                            "9. Disconnect the cables in the reverse order.\n"
+
+                    else ->  "I have already told you that main Issue is Battery Jump Start..\n Again Here are some tips to resolve battery jump start issue ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+
+                }
+            }
+
+            (( message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (!(previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true)))))-> {
+
+
+                MainActivity.previousMessages += message;
+                when (random) {
+
+                    0 ->  "Oky"+"\n Then let me know is your car picking the sulf?"
+
+                    else -> "Alright, now tell me is your car picking the sulf?"
+
+                }
+            }
+            ( previousMessages.contains("electronics",ignoreCase = true)||previousMessages.contains("electronic",ignoreCase = true)||(previousMessages.contains("electricity",ignoreCase = true)||previousMessages.contains("electrical",ignoreCase = true)) && (previousMessages.contains("fault",ignoreCase = true) ||previousMessages.contains("issue",ignoreCase = true)||previousMessages.contains("problem",ignoreCase = true)||previousMessages.contains("not working",ignoreCase = true)||previousMessages.contains("stop",ignoreCase = true)||previousMessages.contains("stopped",ignoreCase = true)))&&(message.contains("yes",ignoreCase = true) ) ->{
+                MainActivity.previousMessages += message
+                when (random) {
+
+
+                    0 -> "The issue you facing is called battery jump start.. \n"+
+                            "Here are some tips for you ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+                    1 -> "The problem you facing is  battery jump start.. \n"+
+                            "Solution for your problem, that might help you ..\n"+
+                            "1.Park the car you’ll use for jump-starting next to the one with the dead battery, positioned close enough so that the cables will reach. The vehicles shouldn't touch one another.\n" +
+                            "Turn off the ignition on both cars.\n" +
+                            "2. First, clamp one end of the positive cable to the dead battery’s positive clamp.\n" +
+                            "3. Now have a helper connect the other end of that cable to the other battery’s positive clamp.\n" +
+                            "4. Next, connect the negative cable to the negative terminal on the good battery.\n" +
+                            "5. Finally, connect the other end of the negative cable to a ground on the vehicle with the dead battery. This can be the engine block or another metal surface away from the battery. Be careful not to touch the two ends of the cable together while doing this.\n" +
+                            "Start the rescue car that is providing the electricity.\n" +
+                            "6. Start the car with the weak battery. If it doesn’t start, check your connections and tighten or clean as needed.\n" +
+                            "7. If it does start, let the problem car run for at least 20 minutes to allow the battery to recharge before shutting it off.\n" +
+                            "8. If it still doesn’t start, there may be another problem. Call a local service station for help.\n" +
+                            "9. Disconnect the cables in the reverse order.\n"
+
+                    else -> "Main Issue is Battery Jump Start..Here are some tips to resolve battery jump start issue ..\n"+
+                            "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
+                            "You will also need somebody with a running car.\n" +
+                            "\n" +
+                            "2. Park the running car nose to nose with your car, so that the engines are close.\n" +
+                            "Otherwise, the jumper cables may not be long enough to reach between both batteries.\n" +
+                            "\n" +
+                            "3.Make sure both cars are turned off before fixing the jumper cables.\n" +
+                            "Engage both parking brakes and activate your hazard lights.\n" +
+                            "\n" +
+                            "4. Next, attach the red jumper cable clamps.\n" +
+                            "They should fix to the red, “POS” or “+” terminal on the dead battering, then to the functional battery in the other vehicle.\n" +
+                            "\n" +
+                            "5. Attach the black cable clamps.\n" +
+                            "Fix these clamps to the black terminal on the functional battery, it may also be labeled “NEG”. The other end of the black cable must be clamped to an unpainted, metal part of your car’s engine.\n" +
+                            "\n" +
+                            "6. Start the assisting car and let it run for a few moments to charge the dead battery.\n" +
+                            "\n" +
+                            "7. Attempt to start your engine\n" +
+                            "If this does not work, rev the other engine and repeat this step.\n" +
+                            "\n" +
+                            "8. Disconnect the black clamps first, then the red clamps.\n" +
+                            "Keep your car running and take it for a drive to continue recharging the battery."
+
+                }
+            }
             message.contains("smoke coming from car",ignoreCase = true) || message.contains("smoke",ignoreCase = true)  ||   message.contains(" engine light is on",ignoreCase = true) ||   message.contains("brake smell",ignoreCase = true) ||  message.contains("consume more gas",ignoreCase = true) || message.contains("oil",ignoreCase = true) ||    message.contains("Engine issue",ignoreCase = true) ||   message.contains("Engine problem",ignoreCase = true) ||  message.contains("Car make strange noises",ignoreCase = true) || message.contains("Engine light on",ignoreCase = true) || message.contains("Car Battery damage",ignoreCase = true) || message.contains("Car Battery corrosion",ignoreCase = true) || message.contains("oil leakage",ignoreCase = true) || message.contains("Lack of power",ignoreCase = true)  ||  message.contains("car breakdown",ignoreCase = true)-> {
                 when (random) {
 

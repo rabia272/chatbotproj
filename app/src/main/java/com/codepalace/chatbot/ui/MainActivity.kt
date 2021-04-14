@@ -27,6 +27,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MessagingAdapter
     private val botList = listOf("Rabia", "Maria")
 
+    companion object {
+        var previousMessages:String="";
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         clickEvents()
 
+        previousMessages=""
         val random = (0..1).random()
         customBotMessage("Hello! Today you're speaking with ${botList[random]}, how may I help?")
     }
@@ -46,17 +51,6 @@ class MainActivity : AppCompatActivity() {
             sendMessage()
         }
 
-        //Scroll back to correct position when user clicks on text view
-        et_message.setOnClickListener {
-            GlobalScope.launch {
-                delay(100)
-
-                withContext(Dispatchers.Main) {
-                    rv_messages.scrollToPosition(adapter.itemCount - 1)
-
-                }
-            }
-        }
     }
 
     private fun recyclerView() {
@@ -89,11 +83,11 @@ class MainActivity : AppCompatActivity() {
             adapter.insertMessage(Message(message, SEND_ID, timeStamp))
             rv_messages.scrollToPosition(adapter.itemCount - 1)
 
-            botResponse(message)
+            botResponse(message,previousMessages)
         }
     }
 
-    private fun botResponse(message: String) {
+    private fun botResponse(message: String,previousMessages:  String  ) {
         val timeStamp = Time.timeStamp()
 
         GlobalScope.launch {
@@ -102,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
             withContext(Dispatchers.Main) {
                 //Gets the response
-                val response = BotResponse.basicResponses(message)
+                val response = BotResponse.basicResponses(message,previousMessages)
 
                 //Adds it to our local list
                 messagesList.add(Message(response, RECEIVE_ID, timeStamp))
