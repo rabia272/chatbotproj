@@ -147,7 +147,7 @@ object BotResponse {
             }
 
 
-            question.contains("Ok now check:\nIs your car picking the sulf?",ignoreCase = true) &&( message.contains("yes",ignoreCase = true)) ->{
+            question.contains("is your car picking the sulf?",ignoreCase = true) &&( message.contains("yes",ignoreCase = true)) ->{
                 MainActivity.previousMessages += message;
                 question="Now check the electrical supply in plug\n"+
                         "Is it ok?\n";
@@ -162,8 +162,7 @@ object BotResponse {
                 }
             }
 
-            question.contains("Now check the electrical supply in plug\n"+
-                    "Is it ok?\n",ignoreCase = true) &&( message.contains("no",ignoreCase = true)) ->{
+            question.contains("Now check the electrical supply",ignoreCase = true) &&( message.contains("no",ignoreCase = true)) ->{
                 MainActivity.previousMessages += message;
                 when (random) {
 
@@ -252,13 +251,13 @@ object BotResponse {
 
                 }
             }
-            ( message.contains("electronics",ignoreCase = true)|| message.contains("electric",ignoreCase = true)||( message.contains("electrics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true))))-> {
+            ( message.contains("electronics",ignoreCase = true)|| message.contains("electric",ignoreCase = true)||message.contains("electrics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&&( (previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true))))-> {
 
 
-                MainActivity.previousMessages += message;
+               MainActivity.previousMessages += message;
                 when (random) {
 
-                    0 ->  "I have already told you that the issue you facing is called battery jump start.. \n"+
+                    0 ->  previousMessages+"I have already told you that the issue you facing is called battery jump start.. \n"+
                             "Again Here are some tips for you ..\n"+
                             "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
                             "You will also need somebody with a running car.\n" +
@@ -282,7 +281,7 @@ object BotResponse {
                             "\n" +
                             "8. Disconnect the black clamps first, then the red clamps.\n" +
                             "Keep your car running and take it for a drive to continue recharging the battery."
-                    1 -> "I have already told you that the problem you facing is  battery jump start.. \n"+
+                    1 ->  previousMessages+"I have already told you that the problem you facing is  battery jump start.. \n"+
                             "Again Solution for your problem, that might help you ..\n"+
                             "1.Park the car you’ll use for jump-starting next to the one with the dead battery, positioned close enough so that the cables will reach. The vehicles shouldn't touch one another.\n" +
                             "Turn off the ignition on both cars.\n" +
@@ -296,7 +295,7 @@ object BotResponse {
                             "8. If it still doesn’t start, there may be another problem. Call a local service station for help.\n" +
                             "9. Disconnect the cables in the reverse order.\n"
 
-                    else ->  "I have already told you that main Issue is Battery Jump Start..\n Again Here are some tips to resolve battery jump start issue ..\n"+
+                    else ->   previousMessages+"I have already told you that main Issue is Battery Jump Start..\n Again Here are some tips to resolve battery jump start issue ..\n"+
                             "1. Get your hands on some jumper cables – keeping some in the trunk is a good idea.\n" +
                             "You will also need somebody with a running car.\n" +
                             "\n" +
@@ -405,7 +404,7 @@ object BotResponse {
 
                 }
             }
-            message.contains("smoke coming from car",ignoreCase = true) || message.contains("smoke",ignoreCase = true)  ||   message.contains(" engine light is on",ignoreCase = true) ||   message.contains("brake smell",ignoreCase = true) ||  message.contains("consume more gas",ignoreCase = true) || message.contains("oil",ignoreCase = true) ||    message.contains("Engine issue",ignoreCase = true) ||   message.contains("Engine problem",ignoreCase = true) ||  message.contains("Car make strange noises",ignoreCase = true) || message.contains("Engine light on",ignoreCase = true) || message.contains("Car Battery damage",ignoreCase = true) || message.contains("Car Battery corrosion",ignoreCase = true) || message.contains("oil leakage",ignoreCase = true) || message.contains("Lack of power",ignoreCase = true)  ||  message.contains("car breakdown",ignoreCase = true)-> {
+            (message.contains("smoke coming from car",ignoreCase = true)) || message.contains("smoke",ignoreCase = true)  ||  (( message.contains(" engine",ignoreCase = true))&&((message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("issue",ignoreCase = true) ||message.contains("fault",ignoreCase = true)||message.contains("crises",ignoreCase = true)))) ||   message.contains("brake smell",ignoreCase = true) ||(  message.contains("gas",ignoreCase = true)&&(message.contains("consume",ignoreCase = true)|| message.contains("take",ignoreCase = true)|| message.contains("use",ignoreCase = true))) ||( message.contains("oil",ignoreCase = true)&&(message.contains("leak",ignoreCase = true)))  ||  message.contains("car breakdown",ignoreCase = true)-> {
                 when (random) {
 
                     0 -> "The issue you facing is car breakdown.. \n"+
