@@ -43,7 +43,7 @@ object BotResponse {
             }
 
 
-            message.contains("help",ignoreCase = true)||(message.contains("car",ignoreCase = true)&& (message.contains("issue",ignoreCase = true))) || message.contains("need help",ignoreCase = true)  || message.contains("have problem",ignoreCase = true)  || message.contains("have issue",ignoreCase = true) && (!(( message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||message.contains("electrics",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))))-> {
+            message.contains("help",ignoreCase = true)||(message.contains("car",ignoreCase = true)&& (message.contains("issue",ignoreCase = true))) || message.contains("need help",ignoreCase = true)  || message.contains("have problem",ignoreCase = true)  || message.contains("have issue",ignoreCase = true) && (!((  message.contains("electric",ignoreCase = true)|| message.contains("electric",ignoreCase = true)||message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||message.contains("electrics",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))))-> {
                 when (random) {
                     0 -> "How can I help you?"
                     1 -> "Sure, What kind of help you need?"
@@ -252,7 +252,7 @@ object BotResponse {
 
                 }
             }
-            (( message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true))))-> {
+            ( message.contains("electronics",ignoreCase = true)|| message.contains("electric",ignoreCase = true)||( message.contains("electrics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true))))-> {
 
 
                 MainActivity.previousMessages += message;
@@ -323,7 +323,7 @@ object BotResponse {
                 }
             }
 
-            ((previousMessages.contains("electrics",ignoreCase = true)|| message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (!(previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true)))))-> {
+            (previousMessages.contains("electrics",ignoreCase = true)||( previousMessages.contains("electric",ignoreCase = true)|| message.contains("electronics",ignoreCase = true)||message.contains("electronic",ignoreCase = true)||(message.contains("electricity",ignoreCase = true)||message.contains("electrical",ignoreCase = true)) && (message.contains("fault",ignoreCase = true) ||message.contains("issue",ignoreCase = true)||message.contains("problem",ignoreCase = true)||message.contains("not working",ignoreCase = true)||message.contains("stop",ignoreCase = true)||message.contains("stopped",ignoreCase = true)))&& (!(previousMessages.contains("battery",ignoreCase = true) && previousMessages.contains("dead",ignoreCase = true) && !(previousMessages.contains("not dead",ignoreCase = true)))))-> {
 
 
                 MainActivity.previousMessages += message;
